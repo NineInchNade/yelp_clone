@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'restaurants' do 
+	
 	context 'no restaurants have been added' do 
 		it 'should display a promt to add a restaurant' do
 			visit '/restaurants' 
