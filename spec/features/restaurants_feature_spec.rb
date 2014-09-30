@@ -21,9 +21,9 @@ describe 'restaurants' do
 			expect(page).not_to have_content('No restaurants yet')
 		end
 	end
-end
 
-describe 'creating restaurants' do
+
+	context  'creating restaurants' do
 
 	it 'promts users to fill out a form, then displays the new restaurant' do
 		visit '/restaurants'
@@ -32,12 +32,55 @@ describe 'creating restaurants' do
 		click_button 'Create Restaurant'
 		expect(page).to have_content 'KFC'
 		expect(current_path).to eq '/restaurants'
+		end
+	end 
+
+	def create_restaurant(name, description="") 
+		visit '/restaurants'
+		click_link "Add a restaurant"
+		fill_in 'Name', with: name 
+		fill_in 'Description', with: description
+		click_button 'Create Restaurant'
+	end  
+
+	context 'editing restaurants' do
+		before do
+			create_restaurant("KFC")		
+		end
+
+		it 'can allow a user to edit a restaurant' do
+		visit '/restaurants'
+			click_link 'Edit KFC'
+			fill_in 'Name', with: "Kentucky fried chicken"
+			fill_in 'Description', with: "This stuff actually prevents people from gettting testicular cancer"
+			click_button 'Update Restaurant'
+			expect(page).to have_content 'Kentucky fried chicken'
+			expect(current_path).to eq '/restaurants'
+		end
+	end
+
+	context 'deleting restaurants' do
+		before do
+			create_restaurant("KFC")		
+		end
+
+		it 'removes a restuarant when a user clicks a delete Link' do
+			visit '/restaurants'
+			click_link "Delete KFC"
+			expect(page).not_to have_content "KFC"
+			expect(page).to have_content 'Restaurant deleted successfully'
+		end
+	end
+
+	context 'restaurant description' do
+		before do 
+			create_restaurant("KFC", "KFC prevents people from getting testicular cancer")
+		end
+
+		it 'shou have a description link that leads to a different side with the description of the restaurant' do
+			visit '/restaurants'
+			click_link "KFC Description"
+			expect(page).to have_content "KFC prevents people from getting testicular cancer"
+		end
 	end
 end 
-
-# describe 'editing restaurants' do
-
-# 	it 'can allow a user to edit a restaurant'
-
-# 	end
-# end
