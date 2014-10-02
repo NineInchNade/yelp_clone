@@ -23,13 +23,14 @@ describe 'restaurant reviews' do
 			end
 		end
 
-		
-
 		it 'displays an average rating for all reviews' do 
 			leave_review('soso', '2')
 			leave_review('really soso', "4")
-			expect(page).to have_content("Average: 3")
+			expect(page).to have_content("Average: ★★★☆☆")
 		end
+
+		
 	end
+
 
 
