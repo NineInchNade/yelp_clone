@@ -8,7 +8,7 @@
 		<%=link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %> 
 	<ul class="show_review"> 
 	<% restaurant.reviews.each do |review| %>
-		<li> <%= "#{review.thoughts} (#{review.rating})"%></li>
+		<li> <%= "#{review.thoughts} (#{review.rating})"%><em> posted: <%= time_ago_in_words(review.created_at)%> ago</em></li>
 	<%end%>
 	<h3>Average: <%= star_rating(restaurant.average_rating)%></h3>
 	</ul> 
