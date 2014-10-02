@@ -25,15 +25,29 @@ describe 'restaurants' do
 
 	context  'creating restaurants' do
 
-	it 'promts users to fill out a form, then displays the new restaurant' do
-		visit '/restaurants'
-		click_link 'Add a restaurant'
-		fill_in 'Name', with: "KFC"
-		click_button 'Create Restaurant'
-		expect(page).to have_content 'KFC'
-		expect(current_path).to eq '/restaurants'
+		context 'a valid restaurant' do
+
+		it 'promts users to fill out a form, then displays the new restaurant' do
+			visit '/restaurants'
+			click_link 'Add a restaurant'
+			fill_in 'Name', with: "KFC"
+			click_button 'Create Restaurant'
+			expect(page).to have_content 'KFC'
+			expect(current_path).to eq '/restaurants'
+			end
+		end 
+
+		context 'an invalid restuarant' do 
+			it 'does not let you submit a name that is too short' do
+				visit '/restaurants'
+				click_link 'Add a restaurant'
+				fill_in 'Name', with: "KF"
+				click_button 'Create Restaurant'
+				expect(page).not_to have_css 'h2', text: "KF"
+				expect(page).to have_content 'error'
+			end
 		end
-	end 
+	end
 
 	def create_restaurant(name, description="") 
 		visit '/restaurants'
@@ -83,4 +97,6 @@ describe 'restaurants' do
 			expect(page).to have_content "KFC prevents people from getting testicular cancer"
 		end
 	end
+
+	context ''
 end 

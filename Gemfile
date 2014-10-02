@@ -28,6 +28,7 @@ gem 'spring',        group: :development
 
 # Gem for testing used in this app : rspec-rails and capybara
 gem 'rspec-rails', group: :test
+gem 'rspec-collection_matchers', group: :test
 gem 'capybara', group: :test
 gem 'launchy', group: :test
 
